@@ -5,7 +5,7 @@ import Home from "../routes/Home";
 import Profile from "../routes/Profile";
 import Navigation from "./Navigation";
 
-function Routers( { isLogin }) {
+function Routers( { isLogin, user }) {
 
 
   return (
@@ -15,7 +15,7 @@ function Routers( { isLogin }) {
         {isLogin ? (
         <>
         <Route exact path='/'>
-          <Home />
+          <Home user={user} />
         </Route>
         <Route exact path ='/profile'>
           <Profile />

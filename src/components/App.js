@@ -6,23 +6,21 @@ function App() {
 
   const auth = mybase.auth();
   const [init, setInit] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
+  const [user, setUser] = useState(null);
 
   useEffect( () => {
     auth.onAuthStateChanged( (user) => {
       if(user) {
-        setIsLogin(true);
-      }
-      else {
-        setIsLogin(false);
+        setUser(user);
       }
       setInit(true);
     })
   },[])
 
+
   return (
     <>
-    <Routers isLogin={isLogin} />
+    {init ? <Routers isLogin={Boolean(user)} user = {user} /> :  <h2>Initializing...</h2>}
     </>
   );
 }
