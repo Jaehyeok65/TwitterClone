@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { dbService } from '../mybase';
+import { dbService, storageService } from '../mybase';
 
 const Hweet = ( { hweet, user }) => {
 
@@ -12,6 +12,8 @@ const Hweet = ( { hweet, user }) => {
         const ok = window.confirm('Delete this?');
         if(ok) {
             await dbService.doc(`hweets/${hweet.id}`).delete();
+            await storageService.refFromURL(hweet.fileurl).delete();
+            
         }
     }
 
@@ -51,6 +53,7 @@ const Hweet = ( { hweet, user }) => {
                 </>
             ) : (
             <>
+                { hweet.fileurl && <img src={hweet.fileurl} width='100px' height='100px' alt='이미지'/>}
                 <span>{hweet.text}</span>
                 { hweet.creatorid === user.uid ? <button onClick={onDelete}>Delete</button> : null}
                 { hweet.creatorid === user.uid ? <button onClick={onToggleEdit}>Edit</button> : null}
